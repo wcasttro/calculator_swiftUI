@@ -21,59 +21,59 @@ struct ContentView: View {
                 Button("7"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity)
                 Button("8"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity)
                 Button("9"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity)
                 Button("X"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
-                 .background(Color.orange)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.orange)
             }.foregroundColor(Color.white)
             
             HStack{
                 Button("4"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity)
                 Button("5"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity)
                 Button("6"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity)
                 Button("-"){
                     
                 }.padding()
-                 .frame(maxWidth: .infinity)
-                 .background(Color.orange)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.orange)
             }.foregroundColor(Color.white)
-               HStack{
-                    Button("1"){
-                        
-                    }.padding()
-                     .frame(maxWidth: .infinity)
-                    Button("2"){
-                        
-                    }.padding()
-                     .frame(maxWidth: .infinity)
-                    Button("3"){
-                        
-                    }.padding()
-                     .frame(maxWidth: .infinity)
-                    Button("+"){
-                        
-                    }.padding()
-                     .frame(maxWidth: .infinity)
-                     .background(Color.orange)
+            HStack{
+                Button("1"){
+                    
+                }.padding()
+                    .frame(maxWidth: .infinity)
+                Button("2"){
+                    
+                }.padding()
+                    .frame(maxWidth: .infinity)
+                Button("3"){
+                    
+                }.padding()
+                    .frame(maxWidth: .infinity)
+                Button("+"){
+                    
+                }.padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.orange)
             }.foregroundColor(Color.white)
             GeometryReader{ // Controla a gemetria (tamanhos da tela)
                 geometry in
@@ -85,20 +85,20 @@ struct ContentView: View {
                     Button(","){
                         
                     }.padding()
-                     .frame(maxWidth: .infinity)
-                   
+                        .frame(maxWidth: .infinity)
+                    
                     Button("="){
                         
                     }.padding()
-                     .frame(maxWidth: .infinity)
-                     .background(Color.orange)
-            }.foregroundColor(Color.white)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.orange)
+                }.foregroundColor(Color.white)
                 
             }.frame(maxHeight: 52)
             
         }.frame(maxWidth: .infinity)
-         .background(Color.black)
-         .padding()
+            .background(Color.black)
+            .padding()
     }
 }
 
