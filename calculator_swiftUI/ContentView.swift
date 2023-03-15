@@ -9,36 +9,60 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var previuos = 0
-    @State var result = 0;
+    @State var previuos = 0.0
+    @State var result = 0.0;
+    
     @State var operation = 0
     @State var previousOperation  = 0
+    
+    func removeZerosFromEnd(value: Double) -> String{
+        let f = NumberFormatter()
+        let number = NSNumber(value: value)
+        f.minimumFractionDigits = 0
+        f.maximumFractionDigits = 16
+        return f.string(from: number) ?? ""
+    }
     
     func calculate(){
         if previousOperation == 1{
             result = previuos + result
             previousOperation = 0
+        } else if previousOperation == 2 {
+            result = previuos - result
+            previousOperation = 0
+        } else if previousOperation == 3{
+            result = previuos * result
+            previousOperation = 0
+        } else if previousOperation == 4{
+            result = previuos / result
+            previousOperation = 0
         }
         previuos = result
     }
     
-    func process(digit: Int)
-    {
+    func process(digit: Int)    {
         
         if(operation > 0){
             result = 0;
             previousOperation = operation
             operation = -1
         }
-        result = (result * 10) + digit;
+        result = (result * 10) + Double(digit);
+    }
+    
+    func reset(){
+        previuos = 0
+        result = 0
+        previousOperation = 0
+        operation = 0
     }
     var body: some View {
         // VStack deixar os itens na vertical (uma Collumn)
         // spacing remove o espaço entre seus filhos
         VStack( alignment: .trailing, spacing: 0 ){
-            Text("\(String(result).count)").foregroundColor(Color.red)
+            Text("\(String( result).count)").foregroundColor(Color.red)
             Spacer()
-            Text(String(result))
+            Text(String(removeZerosFromEnd(value: result)))
                 .padding()
                 .lineLimit(1)
                 .font(.system(size: CGFloat(80 / Int((Double(String(result).count + 10)/8.0)))))
@@ -47,7 +71,7 @@ struct ContentView: View {
                 .fixedSize(horizontal: true, vertical: false)
             HStack{ // HStack deixa os itens na horizontal (uma Row)
                 Button("AC")   {
-                    result = 0;
+                    reset()
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("+/-"){
@@ -59,7 +83,8 @@ struct ContentView: View {
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("/"){
-                    
+                    calculate()
+                    operation = 4
                 }.padding(.vertical, 40) // colocando padiding em um elemento da HStack todos elementos ficam com esses valores
                     .frame(maxWidth: .infinity)
                     .background(Color.orange)
@@ -78,8 +103,9 @@ struct ContentView: View {
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("X"){
-                    
-                }.padding(.vertical, 40) // colocando padiding em um elemento da HStack todos elementos ficam com esses valores
+                    calculate()
+                    operation = 3
+                }.padding(.vertical, 40)
                     .frame(maxWidth: .infinity)
                     .background(Color.orange)
             }.foregroundColor(Color.white)
@@ -98,7 +124,8 @@ struct ContentView: View {
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("-"){
-                    
+                    calculate()
+                    operation = 2
                 }.padding(.vertical, 40)
                     .frame(maxWidth: .infinity)
                     .background(Color.orange)
