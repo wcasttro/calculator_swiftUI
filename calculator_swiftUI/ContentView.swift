@@ -9,24 +9,45 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var result = "0";
+    @State var previuos = 0
+    @State var result = 0;
+    @State var operation = 0
+    @State var previousOperation  = 0
     
+    func calculate(){
+        if previousOperation == 1{
+            result = previuos + result
+            previousOperation = 0
+        }
+        previuos = result
+    }
+    
+    func process(digit: Int)
+    {
+        
+        if(operation > 0){
+            result = 0;
+            previousOperation = operation
+            operation = -1
+        }
+        result = (result * 10) + digit;
+    }
     var body: some View {
         // VStack deixar os itens na vertical (uma Collumn)
         // spacing remove o espaço entre seus filhos
         VStack( alignment: .trailing, spacing: 0 ){
-            Text("\(result.count)").foregroundColor(Color.red)
+            Text("\(String(result).count)").foregroundColor(Color.red)
             Spacer()
-            Text(result)
+            Text(String(result))
                 .padding()
                 .lineLimit(1)
-                .font(.system(size: CGFloat(80 / Int((Double(result.count + 10)/10.0)))))
+                .font(.system(size: CGFloat(80 / Int((Double(String(result).count + 10)/8.0)))))
                 .foregroundColor(Color.white)
                 .frame(maxWidth: .infinity)
                 .fixedSize(horizontal: true, vertical: false)
             HStack{ // HStack deixa os itens na horizontal (uma Row)
                 Button("AC")   {
-                    
+                    result = 0;
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("+/-"){
@@ -45,15 +66,15 @@ struct ContentView: View {
             }.foregroundColor(Color.white)
             HStack{ // HStack deixa os itens na horizontal (uma Row)
                 Button("7")   {
-                    
+                    process(digit: 7)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("8"){
-                    
+                    process(digit: 8)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("9"){
-                    
+                    process(digit: 9)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("X"){
@@ -65,15 +86,15 @@ struct ContentView: View {
             
             HStack{
                 Button("4"){
-                    
+                    process(digit: 4)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("5"){
-                    
+                    process(digit: 5)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("6"){
-                    
+                    process(digit: 6)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("-"){
@@ -84,18 +105,20 @@ struct ContentView: View {
             }.foregroundColor(Color.white)
             HStack{
                 Button("1"){
-                    result += "1"
+                    process(digit: 1)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("2"){
-                    result += "2"
+                    process(digit: 2)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("3"){
-                    
+                    process(digit: 3)
                 }.padding()
                     .frame(maxWidth: .infinity)
                 Button("+"){
+                    calculate()
+                    operation = 1
                     
                 }.padding(.vertical, 40)
                     .frame(maxWidth: .infinity)
@@ -114,6 +137,9 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity)
                     
                     Button("="){
+                        calculate()
+                        previousOperation = 999
+                        operation = 999
                         
                     }.padding(.vertical, 40)
                         .frame(maxWidth: .infinity)
