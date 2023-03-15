@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State var value = "0"
     @State var previuos = 0.0
     @State var result = 0.0;
+    @State var decimal = 0.0
     
     @State var operation = 0
     @State var previousOperation  = 0
@@ -37,7 +39,9 @@ struct ContentView: View {
             result = previuos / result
             previousOperation = 0
         }
+        decimal = 0.0
         previuos = result
+        value = removeZerosFromEnd(value: result)
     }
     
     func process(digit: Int)    {
@@ -47,7 +51,15 @@ struct ContentView: View {
             previousOperation = operation
             operation = -1
         }
-        result = (result * 10) + Double(digit);
+        
+        if(decimal > 0.0){
+            result = result + Double(truncating: NSNumber(value: (Double(digit)/decimal)))
+            decimal = decimal * 10
+            value = "\(value)\(digit)"
+        }else{
+            result = (result * 10) + Double(digit);
+            value = removeZerosFromEnd(value: result);
+        }
     }
     
     func reset(){
@@ -55,6 +67,8 @@ struct ContentView: View {
         result = 0
         previousOperation = 0
         operation = 0
+        decimal = 0.0
+        value = "0"
     }
     var body: some View {
         // VStack deixar os itens na vertical (uma Collumn)
@@ -62,7 +76,7 @@ struct ContentView: View {
         VStack( alignment: .trailing, spacing: 0 ){
             Text("\(String( result).count)").foregroundColor(Color.red)
             Spacer()
-            Text(String(removeZerosFromEnd(value: result)))
+            Text(value)
                 .padding()
                 .lineLimit(1)
                 .font(.system(size: CGFloat(80 / Int((Double(String(result).count + 10)/8.0)))))
@@ -155,10 +169,12 @@ struct ContentView: View {
                 geometry in
                 HStack{
                     Button("0"){
-                        
+                        process(digit: 0)
                     }.padding()
                         .frame(minWidth: geometry.size.width/2)
-                    Button(","){
+                    Button("."){
+                        decimal = 10.0
+                        value = value + "."
                         
                     }.padding()
                         .frame(maxWidth: .infinity)
